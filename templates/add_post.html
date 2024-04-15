@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Add new post
+{% endblock %}
+
+{% block main %}
+    <h2>Add new post</h2>
+    <form action="/add_post" method="post" enctype="multipart/form-data">
+        <div class="input">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto media" name="title" placeholder="Title" type="text">
+            <input class="form-control mx-auto w-auto media" name="cover" type="file" accept=".jpg, .jpeg, .png">
+        </div>
+        <div class="editor">
+            <input id="trix-content" type="hidden" name="content">
+            <trix-editor input="trix-content"></trix-editor>
+        </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const fileToolsButtonGroup = document.querySelector('.trix-button-group--file-tools');
+
+                if (fileToolsButtonGroup) {
+                    const attachFilesButton = fileToolsButtonGroup.querySelector('[data-trix-action="attachFiles"]');
+
+                    if (attachFilesButton) {
+                        attachFilesButton.remove();
+                    }
+                }
+            });
+        </script>
+        <button class="btn mybutton" type="submit">Add new post</button>
+    </form>
+{% endblock %}

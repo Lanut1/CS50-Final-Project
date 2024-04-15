@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    BLOG
+{% endblock %}
+
+{% block main %}
+    <div class="leftcolumn">
+        <div class="card">
+            <div id="carouselExampleControls" class="carousel slide mx-auto" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    {% for post in posts %}
+                        {% if loop.first %}
+                            <div class="carousel-item active">
+                        {% else %}
+                            <div class="carousel-item">
+                        {% endif %}
+                        <a href="{{ url_for('show_post', post_id=post['id']) }}"><img src="{{ post['image_path'] }}" class="d-block w-100" alt="post image"></a>
+                        </div>
+                    {% endfor %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+        <div class="card">
+            <div id="carouselExampleControls1" class="carousel slide mx-auto" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    {% for recipe in recipes %}
+                        {% if loop.first %}
+                            <div class="carousel-item active">
+                        {% else %}
+                            <div class="carousel-item">
+                        {% endif %}
+                        <a href="{{ url_for('show_recipe', recipe_id=recipe['id']) }}"><img src="{{ recipe['image_path'] }}" class="d-block w-100" alt="post image"></a>
+                        </div>
+                    {% endfor %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls1" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls1" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="rightcolumn">
+        <h3 class="header_column">About us</h3>
+        <div class="card">
+            <h5>
+                Welcome to Silkway Fusion, your ultimate destination for culinary inspiration that bridges the flavors of Europe and Asia.
+                At Silkway Fusion, we celebrate the rich tapestry of cuisines from both continents, offering a diverse array of recipes,
+                blog posts, and culinary experiences to tantalize your taste buds and expand your culinary horizons.
+            </h5>
+            <h5>
+                Our mission at Silkway Fusion is to bring together the best of European and Asian culinary traditions,
+                creating a harmonious fusion of flavors that delights and surprises. We believe that food has the power to connect people,
+                cultures, and traditions, and we're passionate about sharing the joy of cooking and eating with our community.
+            </h5>
+        </div>
+    </div>
+{% endblock %}

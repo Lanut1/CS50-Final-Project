@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    BLOG
+{% endblock %}
+
+{% block main %}
+    <h1>BLOG</h1>
+    {% for post in posts %}
+        <div class="card">
+            <div class="container">
+                <div class="cover_blog">
+                    <a href="{{ url_for('show_post', post_id=post['id']) }}"><img src="{{ post['image_path'] }}"></a>
+                </div>
+                <div class="title">
+                    <a href="{{ url_for('show_post', post_id=post['id']) }}">
+                        <h2>{{ post['title'] }}</h2>
+                    </a>
+                    <h5>{{ post['created'] }}</h5>
+                </div>
+            </div>
+        </div>
+        <hr>
+    {% endfor %}
+{% endblock %}

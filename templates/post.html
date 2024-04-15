@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Read post
+{% endblock %}
+{% block main %}
+    <div class="leftcolumn">
+        <div class="card">
+            <div class="header">
+                <div class="header1">
+                    <h2> {{ post[0]['title'] }} </h2>
+                    <h5>{{ post[0]['created'] }}</h5>
+                </div>
+                <div class="header2">
+                    {% if session["user_id"] and not saved %}
+                        <button onclick="buttonClick(this)" id="save"><img src="/static/b3.png"></button>
+                    {% elif session["user_id"] and saved %}
+                        <button onclick="buttonClick(this)" id="save"><img src="/static/b4.png"></button>
+                    {% endif %}
+                </div>
+            </div>
+            <hr>
+            <div id="message-wrapper"></div>
+            <img src="{{ post[0]['image_path'] }}" alt="Cover image" class="picture">
+            <div class="display_content">{{ post[0]['content'] |safe }}</div>
+        </div>
+    </div>
+    <div class="rightcolumn">
+        <h3 class="header_column">You may also like</h3>
+        {% for post in other_posts %}
+            <div class="card" id="others">
+                <div class="right_column_pictures">
+                    <a href="{{ url_for('show_post', post_id=post['id']) }}"><img src="{{ post['image_path'] }}"></a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <script>
+        function buttonClick(button) {
+            let icon = button.getElementsByTagName("img")[0];
+            let isSaved = icon.src.includes('b4.png');
+            if (isSaved) {
+                deleteFunction(icon);
+            } else {
+                saveFunction(icon);
+            }
+        }
+
+        function saveFunction(icon) {
+            icon.src = "/static/b4.png";
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/savepost", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(JSON.stringify({
+                id: "{{ post[0]['id'] }}"
+            }));
+
+            xhr.onload = function() {
+                var response = JSON.parse(this.responseText);
+                var button = document.getElementById('save');
+                if (response.success) {
+                    showMessage(response.message, 'success');
+                } else {
+                    showMessage(response.message, 'error');
+                }
+            };
+        }
+
+        function deleteFunction(icon) {
+            icon.src = "/static/b3.png";
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/deletepost", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(JSON.stringify({
+                id: "{{ post[0]['id'] }}"
+            }));
+
+            xhr.onload = function() {
+                var response = JSON.parse(this.responseText);
+                var button = document.getElementById('save');
+                if (response.success) {
+                    showMessage(response.message, 'success');
+                } else {
+                    showMessage(response.message, 'error');
+                }
+            };
+        }
+
+        function showMessage(message) {
+            var messageWrapper = document.getElementById('message-wrapper');
+
+            while (messageWrapper.firstChild) {
+                messageWrapper.removeChild(messageWrapper.firstChild);
+            }
+
+            var messageContainer = document.createElement('div');
+            messageContainer.textContent = message;
+            messageWrapper.appendChild(messageContainer);
+        }
+    </script>
+{% endblock %}

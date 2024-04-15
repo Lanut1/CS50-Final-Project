@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    My profile page
+{% endblock %}
+
+{% block main %}
+    <div class="column">
+        <div>
+            <h3 class="header_column">{{ profile[0]["username"] }}</h3>
+        </div>
+    </div>
+    <div class="column">
+        {% if saved_posts %}
+            <h3 class="header_column">Saved posts</h3>
+            {% for post in saved_posts %}
+                <div class="card" id="others">
+                    <div class="right_column_pictures">
+                        <a href="{{ url_for('show_post', post_id=post['id']) }}"><img src="{{ post['image_path'] }}"></a>
+                    </div>
+                </div>
+            {% endfor%}
+        {% else %}
+            <h3 class="header_column">No saved posts</h3>
+        {% endif %}
+    </div>
+    <div class="column">
+        {% if saved_recipes %}
+            <h3 class="header_column">Saved recipes</h3>
+            {% for recipe in saved_recipes %}
+                <div class="card" id="others">
+                    <div class="right_column_pictures">
+                        <a href="{{ url_for('show_recipe', recipe_id=recipe['id']) }}"><img src="{{ recipe['image_path'] }}"></a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <h3 class="header_column">No saved recipes</h3>
+        {% endif %}
+    </div>
+{% endblock %}
