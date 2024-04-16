@@ -9,4 +9,4 @@ I used **Bootstrap** library for some evements of my website like photos carouse
 Also I've made**Sqlite** database to store information about users, posts, recipes and user's saved content.
 #### Installation
 1. Clone the repository
-2. Install ololo
+2. Install
